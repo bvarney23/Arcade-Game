@@ -6,8 +6,11 @@ let gameState = {
     ],
     currentPlayerName: "",
     currentPlayerNameTwo: "",
-    winningConditions: []
+    winningConditions: [],
 }
+let currentPlayer = "X";
+
+// Create HTML board using JS
 
 let gameBoardContainer = document.getElementById("game-board");
 
@@ -37,6 +40,8 @@ function renderGame () {
 
 document.addEventListener("DOMContentLoaded", renderGame)
 
+// Fill in Player Names
+
 let nameInputElement = document.getElementById("name-input");
 
 let submitButtonElement = document.getElementById("submit");
@@ -64,3 +69,28 @@ function displayNamePlayerTwo() {
 }
 
 document.addEventListener("click", displayNamePlayerTwo);
+
+
+
+function startGame() {
+    cell.forEach(cell =>cell.addEventListener("click",
+    cellClicked))
+}
+
+// Change between X and O
+
+function changePlayer() {
+    currentPlayer = (currentPlayer === "X")? "X":"0";
+    return currentPlayer;
+}
+console.log(changePlayer())
+
+// click on cell to place X or O
+
+function clickCell () {
+    gameState.gameBoard = currentPlayer;
+    cell.textContent = gameState.gameBoard;
+}
+
+document.addEventListener("click", clickCell)
+console.log(clickCell)

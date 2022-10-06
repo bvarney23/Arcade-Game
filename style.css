@@ -6,16 +6,17 @@
     display: flex;
     flex-direction: row; 
     justify-content: space-around;
-    width: 20%;
-    height: 20%; 
+    padding: none;
+    width: 50%;
+    height: 50%; 
 }
 
 .cell {
     border: 2px solid black;
     margin: 2%;
-    padding: 2%;
-    width: 30%;
-    height: 30%; 
+    padding: 10%;
+    width: 50%;
+    height: 50%; 
 }
 
 #game-board {
