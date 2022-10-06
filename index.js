@@ -4,7 +4,8 @@ let gameState = {
         [[null], [null], [null]],
         [[null], [null], [null]]
     ],
-    currentPlayerTurn: "",
+    currentPlayerName: "",
+    currentPlayerNameTwo: "",
     winningConditions: []
 }
 
@@ -35,3 +36,31 @@ function renderGame () {
 };
 
 document.addEventListener("DOMContentLoaded", renderGame)
+
+let nameInputElement = document.getElementById("name-input");
+
+let submitButtonElement = document.getElementById("submit");
+let displayNameElement = document.getElementById("displayed-name");
+
+function displayNamePlayerOne() {
+    let playerOneName = nameInputElement.value;
+    gameState.currentPlayerName = playerOneName;
+
+    displayNameElement.textContent = `Player One: ${gameState.currentPlayerName}`;
+}
+
+document.addEventListener("click", displayNamePlayerOne);
+
+let nameInputElementTwo = document.getElementById("name-input-two");
+
+let submitButtonElementTwo = document.getElementById("submit-two");
+let displayNameElementTwo = document.getElementById("displayed-name-two");
+
+function displayNamePlayerTwo() {
+    let playerTwoName = nameInputElementTwo.value;
+    gameState.currentPlayerNameTwo = playerTwoName;
+
+    displayNameElementTwo.textContent = `Player Two: ${gameState.currentPlayerNameTwo}`;
+}
+
+document.addEventListener("click", displayNamePlayerTwo);
