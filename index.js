@@ -1,8 +1,8 @@
 let gameState = {
     gameBoard: [
-        [[null], [null], [null]],
-        [[null], [null], [null]],
-        [[null], [null], [null]]
+        [[""], [""], [""]],
+        [[""], [""], [""]],
+        [[""], [""], [""]]
     ],
     currentPlayerName: "",
     currentPlayerNameTwo: "",
@@ -23,7 +23,7 @@ function renderGame () {
         for (let numOfCellsMade = 0; numOfCellsMade < currentJSRow.length; numOfCellsMade++) {
             let newCellElement = document.createElement("div");
             newCellElement.classList.add("cell");
-
+            
             if (currentJSRow[numOfCellsMade] != null) {
                 newCellElement.textContent = currentJSRow[numOfCellsMade];
             } else {
@@ -40,7 +40,7 @@ function renderGame () {
 
 document.addEventListener("DOMContentLoaded", renderGame)
 
-// Fill in Player Names
+// Fill in Player One
 
 let nameInputElement = document.getElementById("name-input");
 
@@ -56,6 +56,8 @@ function displayNamePlayerOne() {
 
 document.addEventListener("click", displayNamePlayerOne);
 
+// Fill in Player Two
+
 let nameInputElementTwo = document.getElementById("name-input-two");
 
 let submitButtonElementTwo = document.getElementById("submit-two");
@@ -70,27 +72,28 @@ function displayNamePlayerTwo() {
 
 document.addEventListener("click", displayNamePlayerTwo);
 
+// Set winning conditions
 
+function winningConditions() {
 
-function startGame() {
-    cell.forEach(cell =>cell.addEventListener("click",
-    cellClicked))
 }
+
+// click on cell to place X or O
+function clickCell () {
+    
+}
+
 
 // Change between X and O
 
 function changePlayer() {
-    currentPlayer = (currentPlayer === "X")? "X":"0";
-    return currentPlayer;
-}
-console.log(changePlayer())
 
-// click on cell to place X or O
-
-function clickCell () {
-    gameState.gameBoard = currentPlayer;
-    cell.textContent = gameState.gameBoard;
 }
 
-document.addEventListener("click", clickCell)
-console.log(clickCell)
+// Check for winners
+
+function checkWinner() {
+
+}
+
+// Reset the board
