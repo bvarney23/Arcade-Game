@@ -1,14 +1,15 @@
 let gameState = {
     gameBoard: [
-        [[""], [""], [""]],
-        [[""], [""], [""]],
-        [[""], [""], [""]]
-    ],
+        [null, null, null],
+        [null, null, null],
+        [null, null, null]
+      ],
     currentPlayerName: "",
     currentPlayerNameTwo: "",
     winningConditions: [],
 }
 let currentPlayer = "X";
+let gameRunning = false;
 
 // Create HTML board using JS
 
@@ -36,9 +37,19 @@ function renderGame () {
         gameBoardContainer.appendChild(newRowElement);
 
     }
+    // click on cell to place X or O
+    let cellElements = document.getElementsByClassName("cell");
+
+    for (let i = 0; i < cellElements.length; i++) {
+        let cell = cellElements[i]
+
+    cell.addEventListener("click", clickCell)
+}
 };
 
 document.addEventListener("DOMContentLoaded", renderGame)
+
+
 
 // Fill in Player One
 
@@ -78,17 +89,24 @@ function winningConditions() {
 
 }
 
-// click on cell to place X or O
-function clickCell () {
-    
+function clickCell (event) {
+    let cell = event.target
+    cell.textContent = currentPlayer
+        changePlayer()
 }
-
 
 // Change between X and O
+let turnText = document.getElementById("turn-tracker")
 
 function changePlayer() {
-
+    if (currentPlayer == "X") {
+        currentPlayer = "O"
+    } else {
+        currentPlayer = "X"
+    }
+    turnText.textContent = `${currentPlayer}'s turn`
 }
+// console.log(changePlayer())
 
 // Check for winners
 
