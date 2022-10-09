@@ -36,10 +36,10 @@ function renderGame () {
             if (currentJSRow[numOfCellsMade] != null) {
                 newCellElement.textContent = currentJSRow[numOfCellsMade];
             } else {
-                newCellElement.textContent = ""
+                newCellElement.textContent = "";
             }
 
-            newRowElement.appendChild(newCellElement)
+            newRowElement.appendChild(newCellElement);
         }
     
         gameBoardContainer.appendChild(newRowElement);
@@ -116,46 +116,46 @@ function changePlayer() {
 
 // Check for winners
 
-// function checkWinner() {
-//     let roundWon = false;
+function checkWinner() {
+    let roundWon = false;
 
-//     for(let i = 0; i < winningConditions.length; i++){
-//         let condition = winningConditions[i];
-//         let cellElementsA = gameState.gameBoard[condition[0]];
-//         let cellElementsB = gameState.gameBoard[condition[1]];
-//         let cellElementsC = gameState.gameBoard[condition[2]];
+    for(let i = 0; i < winningConditions.length; i++){
+        let condition = winningConditions[i];
+        let cellElementsA = cell.textContent[condition[0]];
+        let cellElementsB = cell.textContent[condition[1]];
+        let cellElementsC = cell.textContent[condition[2]];
 
-//         if(cellElementsA == " " || cellElementsB == " " || cellElementsC == " "){
-//             continue;
-//         }
-//         if(cellElementsA == cellElementsB && cellElementsB == cellElementsC){
-//             roundWon = true;
-//             break;
-//         }
-//     }
+        if(cellElementsA == " " || cellElementsB == " " || cellElementsC == " "){
+            continue;
+        }
+        if(cellElementsA == cellElementsB && cellElementsB == cellElementsC){
+            roundWon = true;
+            break;
+        }
+    }
 
-//     if(roundWon){
-//         turnText.textContent = `${currentPlayer} wins!`;
-//     }
-//     else if(!gameState.gameBoard.includes(" ")){
-//         turnText.textContent = `Draw!`;
-//     }
-//     else{
-//         changePlayer();
-//     }
-// }
+    if(roundWon){
+        turnText.textContent = `${currentPlayer} wins!`;
+    }
+    else if(!gameState.gameBoard.includes(" ")){
+        turnText.textContent = `Draw!`;
+    }
+    else{
+        changePlayer();
+    }
+}
+
 // Reset the board
 let resetButton = document.getElementById("reset")
 
 
 function restartGame() {
-    let currentPlayer = "X";
+    currentPlayer = "X";
     turnText.textContent = `${currentPlayer}'s turn`;
-    gameState.gameBoard = [
-        [null, null, null],
-        [null, null, null],
-        [null, null, null]
-      ]
-}
-
+    let resetGameBoard = gameState.gameBoard
+    for (i=0; i<=resetGameBoard; i++) {
+        resetGameBoard = "";
+        resetButton.addEventListener("click", restartGame)
+    }
+    }
 resetButton.addEventListener("click", restartGame)
