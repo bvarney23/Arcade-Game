@@ -5,10 +5,19 @@ body {
 h2 {
     text-align: center;
 }
-
-/* #name-input-container {
-
-} */
+h3 {
+    text-align: center;
+}
+#name-input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-evenly;
+}
+#your-displayed-name-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
 .row { 
     display: flex;
     flex-direction: row; 
@@ -24,7 +33,8 @@ h2 {
     padding: 10%;
     width: 50%;
     height: 50%;
-
+    font-size: 24px;
+    text-align: center;
 }
 
 #game-board {

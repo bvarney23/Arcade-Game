@@ -6,10 +6,18 @@ let gameState = {
       ],
     currentPlayerName: "",
     currentPlayerNameTwo: "",
-    winningConditions: [],
 }
+const winningConditions = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+];
 let currentPlayer = "X";
-let gameRunning = false;
 
 // Create HTML board using JS
 
@@ -28,7 +36,7 @@ function renderGame () {
             if (currentJSRow[numOfCellsMade] != null) {
                 newCellElement.textContent = currentJSRow[numOfCellsMade];
             } else {
-                newCellElement.textContent = "Empty"
+                newCellElement.textContent = ""
             }
 
             newRowElement.appendChild(newCellElement)
@@ -83,19 +91,18 @@ function displayNamePlayerTwo() {
 
 document.addEventListener("click", displayNamePlayerTwo);
 
-// Set winning conditions
-
-function winningConditions() {
-
-}
 
 function clickCell (event) {
     let cell = event.target
-    cell.textContent = currentPlayer
+
+    if (cell.textContent == ""){
+        cell.textContent = currentPlayer
         changePlayer()
+    } else {
+        return
+}
 }
 
-// Change between X and O
 let turnText = document.getElementById("turn-tracker")
 
 function changePlayer() {
@@ -106,12 +113,49 @@ function changePlayer() {
     }
     turnText.textContent = `${currentPlayer}'s turn`
 }
-// console.log(changePlayer())
 
 // Check for winners
 
-function checkWinner() {
+// function checkWinner() {
+//     let roundWon = false;
 
+//     for(let i = 0; i < winningConditions.length; i++){
+//         let condition = winningConditions[i];
+//         let cellElementsA = gameState.gameBoard[condition[0]];
+//         let cellElementsB = gameState.gameBoard[condition[1]];
+//         let cellElementsC = gameState.gameBoard[condition[2]];
+
+//         if(cellElementsA == " " || cellElementsB == " " || cellElementsC == " "){
+//             continue;
+//         }
+//         if(cellElementsA == cellElementsB && cellElementsB == cellElementsC){
+//             roundWon = true;
+//             break;
+//         }
+//     }
+
+//     if(roundWon){
+//         turnText.textContent = `${currentPlayer} wins!`;
+//     }
+//     else if(!gameState.gameBoard.includes(" ")){
+//         turnText.textContent = `Draw!`;
+//     }
+//     else{
+//         changePlayer();
+//     }
+// }
+// Reset the board
+let resetButton = document.getElementById("reset")
+
+
+function restartGame() {
+    let currentPlayer = "X";
+    turnText.textContent = `${currentPlayer}'s turn`;
+    gameState.gameBoard = [
+        [null, null, null],
+        [null, null, null],
+        [null, null, null]
+      ]
 }
 
-// Reset the board
+resetButton.addEventListener("click", restartGame)
