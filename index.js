@@ -8,14 +8,14 @@ let gameState = {
     currentPlayerNameTwo: "",
 }
 const winningConditions = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
+    [[0,0], [0,1], [0,2]],
+    [[1,0], [1, 1], [1,2]],
+    [[2,0], [2,1], [2,2]],
+    [[0,0], [1,0], [2,0]],
+    [[0,1], [1,1] [2, 1]],
+    [[0,2], [1,2], [2,2]],
+    [[0,0], [1,1], [2,2]],
+    [[0,2] , [1,1], [0,2]]
 ];
 let currentPlayer = "X";
 
@@ -24,13 +24,19 @@ let currentPlayer = "X";
 let gameBoardContainer = document.getElementById("game-board");
 
 function renderGame () {
+    while (gameBoardContainer.firstChild) {
+    gameBoardContainer.removeChild(gameBoardContainer.firstChild);
+}
+
     for (let numOfRowsMade = 0; numOfRowsMade < gameState.gameBoard.length; numOfRowsMade++) {
         let newRowElement = document.createElement("div");
         newRowElement.classList.add("row");
+        newRowElement.dataset.rowIndex = numOfRowsMade
         let currentJSRow = gameState.gameBoard[numOfRowsMade];
     
         for (let numOfCellsMade = 0; numOfCellsMade < currentJSRow.length; numOfCellsMade++) {
             let newCellElement = document.createElement("div");
+            newCellElement.dataset.cellIndex = numOfCellsMade
             newCellElement.classList.add("cell");
             
             if (currentJSRow[numOfCellsMade] != null) {
@@ -67,13 +73,15 @@ let submitButtonElement = document.getElementById("submit");
 let displayNameElement = document.getElementById("displayed-name");
 
 function displayNamePlayerOne() {
+
     let playerOneName = nameInputElement.value;
     gameState.currentPlayerName = playerOneName;
+    updatePlayerOneDisplay()
+    
 
-    displayNameElement.textContent = `Player One: ${gameState.currentPlayerName}`;
 }
 
-document.addEventListener("click", displayNamePlayerOne);
+submitButtonElement.addEventListener("click", displayNamePlayerOne);
 
 // Fill in Player Two
 
@@ -85,22 +93,25 @@ let displayNameElementTwo = document.getElementById("displayed-name-two");
 function displayNamePlayerTwo() {
     let playerTwoName = nameInputElementTwo.value;
     gameState.currentPlayerNameTwo = playerTwoName;
-
-    displayNameElementTwo.textContent = `Player Two: ${gameState.currentPlayerNameTwo}`;
+    updatePlayerTwoDisplay()
 }
 
-document.addEventListener("click", displayNamePlayerTwo);
+submitButtonElementTwo.addEventListener("click", displayNamePlayerTwo);
 
 
 function clickCell (event) {
+    
     let cell = event.target
-
-    if (cell.textContent == ""){
-        cell.textContent = currentPlayer
+    let row = cell.parentElement
+    console.log(row)
+    let rowIndex = row.dataset.rowIndex
+    let cellIndex = cell.dataset.cellIndex
+    if (gameState.gameBoard[rowIndex][cellIndex] == null) {
+        gameState.gameBoard[rowIndex][cellIndex] = currentPlayer
         changePlayer()
-    } else {
-        return
-}
+        renderGame()
+    }
+    console.log(gameState.gameBoard)
 }
 
 let turnText = document.getElementById("turn-tracker")
@@ -118,44 +129,37 @@ function changePlayer() {
 
 function checkWinner() {
     let roundWon = false;
-
-    for(let i = 0; i < winningConditions.length; i++){
-        let condition = winningConditions[i];
-        let cellElementsA = cell.textContent[condition[0]];
-        let cellElementsB = cell.textContent[condition[1]];
-        let cellElementsC = cell.textContent[condition[2]];
-
-        if(cellElementsA == " " || cellElementsB == " " || cellElementsC == " "){
-            continue;
-        }
-        if(cellElementsA == cellElementsB && cellElementsB == cellElementsC){
-            roundWon = true;
-            break;
-        }
-    }
-
-    if(roundWon){
-        turnText.textContent = `${currentPlayer} wins!`;
-    }
-    else if(!gameState.gameBoard.includes(" ")){
-        turnText.textContent = `Draw!`;
-    }
-    else{
-        changePlayer();
-    }
 }
 
 // Reset the board
 let resetButton = document.getElementById("reset")
 
-
 function restartGame() {
+    // reset the current player to X
     currentPlayer = "X";
     turnText.textContent = `${currentPlayer}'s turn`;
-    let resetGameBoard = gameState.gameBoard
-    for (i=0; i<=resetGameBoard; i++) {
-        resetGameBoard = "";
-        resetButton.addEventListener("click", restartGame)
-    }
-    }
+
+    // Remove player one and player two name
+    gameState.currentPlayerName = ""
+    gameState.currentPlayerNameTwo = ""
+    updatePlayerOneDisplay();
+    updatePlayerTwoDisplay();
+
+    // Reset the gameboard to original state
+    gameState.gameBoard = [
+        [null, null, null],
+        [null, null, null],
+        [null, null, null]
+      ]
+    renderGame()
+
+}
 resetButton.addEventListener("click", restartGame)
+
+function updatePlayerOneDisplay () {
+    displayNameElement.textContent = `Player One: ${gameState.currentPlayerName}`;
+}
+
+function updatePlayerTwoDisplay() {
+    displayNameElementTwo.textContent = `Player Two: ${gameState.currentPlayerNameTwo}`;
+}
