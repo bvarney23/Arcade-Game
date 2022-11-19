@@ -12,11 +12,36 @@ const winningConditions = [
     [[1,0], [1, 1], [1,2]],
     [[2,0], [2,1], [2,2]],
     [[0,0], [1,0], [2,0]],
-    [[0,1], [1,1] [2, 1]],
+    [[0,1], [1,1], [2,1]],
     [[0,2], [1,2], [2,2]],
     [[0,0], [1,1], [2,2]],
-    [[0,2] , [1,1], [0,2]]
+    [[0,2], [1,1], [2,0]]
 ];
+
+// Check for winners
+
+function checkWinner() {
+    let roundWinner = null;
+    for (i=0; i<winningConditions.length; i++) {
+        let condition = winningConditions[i]
+        let checker = []
+            for(j=0; j<condition.length; j++) {
+                let conditionItem = condition[j]
+                let rowIndex = conditionItem[0]
+                let columnIndex = conditionItem[1]
+                let entry = gameState.gameBoard[rowIndex][columnIndex]
+                checker.push(entry)
+            }
+            if (checker[0] == "X" && checker[1] == "X" && checker[2] == "X") {
+                roundWinner = "X"
+            }
+            if (checker[0] == "O" && checker[1] == "O" && checker[2] == "O") {
+                roundWinner = "O"
+            }
+    }
+    return roundWinner
+}
+
 let currentPlayer = "X";
 
 // Create HTML board using JS
@@ -108,8 +133,13 @@ function clickCell (event) {
     let cellIndex = cell.dataset.cellIndex
     if (gameState.gameBoard[rowIndex][cellIndex] == null) {
         gameState.gameBoard[rowIndex][cellIndex] = currentPlayer
-        changePlayer()
         renderGame()
+        let winner = checkWinner()
+        if (winner) {
+            alert("Winner is " + winner)
+        } else {
+            changePlayer()
+        }
     }
     console.log(gameState.gameBoard)
 }
@@ -125,11 +155,7 @@ function changePlayer() {
     turnText.textContent = `${currentPlayer}'s turn`
 }
 
-// Check for winners
 
-function checkWinner() {
-    let roundWon = false;
-}
 
 // Reset the board
 let resetButton = document.getElementById("reset")
