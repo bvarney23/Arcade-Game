@@ -83,12 +83,10 @@ function renderGame () {
         let cell = cellElements[i]
 
     cell.addEventListener("click", clickCell)
-}
+    }
 };
 
 document.addEventListener("DOMContentLoaded", renderGame)
-
-
 
 // Fill in Player One
 
@@ -154,8 +152,6 @@ function changePlayer() {
     turnText.textContent = `${currentPlayer}'s turn`
 }
 
-
-
 // Reset the board
 let resetButton = document.getElementById("reset")
 
@@ -176,8 +172,9 @@ function restartGame() {
         [null, null, null],
         [null, null, null]
       ]
-    renderGame()
-
+    renderGame();
+    removePlayerOneName();
+    removePlayerTwoName();
 }
 resetButton.addEventListener("click", restartGame)
 
