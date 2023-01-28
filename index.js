@@ -98,12 +98,10 @@ let submitButtonElement = document.getElementById("submit");
 let displayNameElement = document.getElementById("displayed-name");
 
 function displayNamePlayerOne() {
-
     let playerOneName = nameInputElement.value;
     gameState.currentPlayerName = playerOneName;
-    updatePlayerOneDisplay()
-    
-
+    updatePlayerOneDisplay();
+    removePlayerOneName();
 }
 
 submitButtonElement.addEventListener("click", displayNamePlayerOne);
@@ -118,7 +116,8 @@ let displayNameElementTwo = document.getElementById("displayed-name-two");
 function displayNamePlayerTwo() {
     let playerTwoName = nameInputElementTwo.value;
     gameState.currentPlayerNameTwo = playerTwoName;
-    updatePlayerTwoDisplay()
+    updatePlayerTwoDisplay();
+    removePlayerTwoName();
 }
 
 submitButtonElementTwo.addEventListener("click", displayNamePlayerTwo);
@@ -188,4 +187,12 @@ function updatePlayerOneDisplay () {
 
 function updatePlayerTwoDisplay() {
     displayNameElementTwo.textContent = `Player Two: ${gameState.currentPlayerNameTwo}`;
+}
+
+function removePlayerOneName() {
+    document.getElementById("name-input").value = "";
+}
+
+function removePlayerTwoName() {
+    document.getElementById("name-input-two").value = "";
 }
